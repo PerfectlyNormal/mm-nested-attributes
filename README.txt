@@ -8,7 +8,8 @@ A port of ActiveRecord's nested attributes functionality for MongoMapper.
 
 == FEATURES/PROBLEMS:
 
-At the moment only collection functionality is supported.
+At the moment only collection functionality is supported. Working on
+one at the moment.
 
 == SYNOPSIS:
 
