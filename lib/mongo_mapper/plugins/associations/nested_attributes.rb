@@ -34,7 +34,8 @@ module MongoMapper
 }, __FILE__, __LINE__
             attr_names.each do |association_name|
               if association = associations[association_name]
-                type = (association.many? ? :collection : :one_to_one)
+                item_class = association.class
+                type = (item_class = MongoMapper::Plugins::Associations::ManyAssociation ? :collection : :one_to_one)
                 nested_attributes_options[association_name.to_sym] = options
 
                 class_eval %{
