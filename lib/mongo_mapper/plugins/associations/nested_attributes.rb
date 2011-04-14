@@ -28,14 +28,15 @@ module MongoMapper
 
             def save_associations
               associations.each do |key,association|
-                send(key).save! if nested_attributes_options.keys.include?(association.name) && !association.many?
+                item_class = association.class
+                send(key).save! if nested_attributes_options.keys.include?(association.name) && item_class != MongoMapper::Plugins::Associations::ManyAssociation
               end
             end
 }, __FILE__, __LINE__
             attr_names.each do |association_name|
               if association = associations[association_name]
                 item_class = association.class
-                type = (item_class = MongoMapper::Plugins::Associations::ManyAssociation ? :collection : :one_to_one)
+                type = (item_class == MongoMapper::Plugins::Associations::ManyAssociation ? :collection : :one_to_one)
                 nested_attributes_options[association_name.to_sym] = options
 
                 class_eval %{
