@@ -12,7 +12,7 @@ module MongoMapper
 
         def self.configure(model)
           model.class_eval do
-            class_inheritable_accessor :nested_attributes_options, :instance_writer => false
+            class_attribute :nested_attributes_options
             self.nested_attributes_options = {}
           end
         end
