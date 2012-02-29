@@ -6,7 +6,8 @@ module MongoMapper
   module Plugins
     module Associations
       module NestedAttributes
-
+        extend ActiveSupport::Concern
+        
         REJECT_ALL_BLANK_PROC = proc { |attributes| attributes.all? { |_, value| value.blank? } }
 
         def self.configure(model)
