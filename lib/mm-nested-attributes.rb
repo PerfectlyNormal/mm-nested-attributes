@@ -13,14 +13,12 @@ module MongoMapper
     end
   
     module EmbeddedDocument
-      module InstanceMethods
-        def mark_for_destruction
-          @marked_for_destruction = true
-        end
+      def mark_for_destruction
+        @marked_for_destruction = true
+      end
 
-        def marked_for_destruction?
-          @marked_for_destruction
-        end
+      def marked_for_destruction?
+        @marked_for_destruction
       end
     end
   
