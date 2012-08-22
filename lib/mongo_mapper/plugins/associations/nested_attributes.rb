@@ -19,9 +19,8 @@ module MongoMapper
         module Callbacks
 
           def save_associations
-            associations.each do |key,association|
-              # debugger if !association.many?
-              # send(key).save! if nested_attributes_options.keys.include?(association.name) && !association.many?
+            associations.each do |key, association|
+              remove_embedded_associated_records
               send(key).try(:save!) if nested_attributes_options.keys.include?(association.name) && !association.many? && !association.embeddable?
             end
           end
@@ -29,7 +28,16 @@ module MongoMapper
           def remove_embedded_associated_records
             associations.each do |key, association|
               next unless association.embeddable?
-              self.send(key).delete_if(&:marked_for_destruction?)
+
+              if association.many?
+                self.send(key) && self.send(key).delete_if(&:marked_for_destruction?)
+              else
+                mod = self.send(key)
+                if mod && mod.marked_for_destruction?
+                  return mod.destroy if mod.respond_to?(:destroy)
+                  return mod.delete  if mod.respond_to?(:delete)
+                end
+              end
             end
           end
         end
