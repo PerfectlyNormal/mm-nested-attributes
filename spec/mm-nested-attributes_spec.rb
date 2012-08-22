@@ -135,7 +135,7 @@ describe "Nested attributes plugin for collections" do
       TestOne.all.each {|t| t.destroy}
       TestSolo.all.each {|t| t.destroy}
     end
-    
+
     it "raises an error if the document isn't found" do
       @parent = @klass.new
       @child = @parent.children.create!(:value => 'foo')
@@ -149,16 +149,16 @@ describe "Nested attributes plugin for collections" do
     it 'updates the collection document' do
       @parent = @klass.create!(:value => 'parent_value')
       @child = @klass.first.children.create!(:value => 'foo')
-    
+
       @parent.children_attributes = [ { :id => @child.id, :value => 'bar' } ]
       @parent.children[0].value.should == 'bar'
-    
+
       # has not been saved so the db should have the old value
 
       @klass.first.children[0].value.should == 'foo'
-    
+
       @parent.save!
-    
+
       # after save the db should have the new value
       @klass.first.children[0].value.should == 'bar'
       @klass.first.destroy
@@ -272,21 +272,21 @@ describe "Nested attributes plugin for embedded document" do
     @child_klass = EDoc('Child') do
       before_save :do_bar
       key :value, String
-      
+
       def do_bar; end
     end
-    
+
     @brat_klass = EDoc('Brat') do
       before_save :do_bar
       key :value, String
-      
+
       def do_bar; end
     end
 
     @klass.many :children, :class => @child_klass
     @klass.has_one :brat, :class => @brat_klass
     # @klass.accepts_nested_attributes_for :children, :brat
-    # 
+    #
     # @parent = @klass.new
   end
 
@@ -294,48 +294,48 @@ describe "Nested attributes plugin for embedded document" do
     describe "for one-to-one associations" do
       before do
         @klass.accepts_nested_attributes_for :brat
-        @parent = @klass.new.tap{|p| p.save!}
-        @parent.brat_attributes = {:value => "foo"}
+        @parent = @klass.new#.tap{ |p| p.save! }
+        @parent.brat_attributes = { :value => "foo" }
       end
-      
+
       it "should create the brat document" do
         @parent.brat.should_not be_nil
         @parent.brat.value.should == "foo"
       end
-      
+
       it "should retain it on save" do
         doing {@parent.save!}.should_not raise_error
         @parent.reload
         @parent.brat.should_not be_nil
         @parent.brat.value.should == "foo"
       end
-      
+
       it "should only call child validations once" do
         pending "This actually works correctly but for some strange reason it creates a brand new object which does not get the mock object"
-        # @parent.brat.should_receive(:do_bar).once
-        # doing {@parent.save!}.should_not raise_error
+        @parent.brat.should_receive(:do_bar).once
+        doing { @parent.save! }.should_not raise_error
       end
     end
-    
+
     describe "for collections" do
       before do
         @klass.accepts_nested_attributes_for :children
         @parent = @klass.new.tap{|p| p.save!}
         @parent.children_attributes = [{:value => "foo"}]
       end
-      
+
       it "should create children document" do
         @parent.children.size.should == 1
         @parent.children[0].value.should == "foo"
       end
-      
+
       it "should retain it on save" do
         doing {@parent.save!}.should_not raise_error
         @parent.reload
         @parent.children.size.should == 1
         @parent.children[0].value.should == "foo"
       end
-      
+
       it "should only call child validations once" do
         child = @parent.children[0]
         child.should_receive(:do_bar).once
@@ -343,22 +343,22 @@ describe "Nested attributes plugin for embedded document" do
       end
     end
   end
-  
+
   describe "updating existing documents"
 
   describe "deleting an existing document" do
-    
+
     def create_parent_and_brat
       @parent = @klass.new
       @brat = @brat_klass.new(:value => 'foo')
       @parent.brat = @brat
     end
-    
-    describe "in a one-to-one association" do  
+
+    describe "in a one-to-one association" do
       it 'does nothing unless :allow_destroy is true' do
         @klass.accepts_nested_attributes_for :brat
 
-       create_parent_and_brat
+        create_parent_and_brat
 
         @parent.brat_attributes = { :id => @brat.id, :_destroy => '1' }
         @parent.save!
@@ -367,25 +367,25 @@ describe "Nested attributes plugin for embedded document" do
 
       it 'deletes the document when _destroy is present' do
         @klass.accepts_nested_attributes_for :brat, :allow_destroy => true
-      
+
         create_parent_and_brat
-      
-        @parent.brat_attributes = { :id => @brat.id, :_destroy => '1' }      
+
+        @parent.brat_attributes = { :id => @brat.id, :_destroy => '1' }
         @parent.save!
         @parent.brat.should be_nil
       end
-      
+
       it "does not delete the document until save is called" do
         @klass.accepts_nested_attributes_for :brat, :allow_destroy => true
-      
+
         create_parent_and_brat
         @parent.brat_attributes = { :id => @brat.id, :_destroy => '1' }
         @parent.brat.should == @brat
         @parent.brat.marked_for_destruction?.should be_true
       end
     end
-    
-    describe "in a collection" do  
+
+    describe "in a collection" do
       it 'does nothing unless :allow_destroy is true' do
         @klass.accepts_nested_attributes_for :children
 
