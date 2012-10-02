@@ -1,6 +1,8 @@
 mm-nested-attributes
 by Toni Tuominen and others
 
+[![Build Status](https://secure.travis-ci.org/PerfectlyNormal/mm-nested-attributes.png)](http://travis-ci.org/PerfectlyNormal/mm-nested-attributes)
+
 ## DESCRIPTION:
 
 A port of ActiveRecord's nested attributes functionality for MongoMapper.
