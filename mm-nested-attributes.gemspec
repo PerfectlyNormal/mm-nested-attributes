@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.email = %q{toni@piranhadigital.fi}
   s.homepage = %q{http://github.com/tjtuom/mm-nested-attributes}
 
-  s.version = MongoMapper::Plugins::Associations::NestedAttributes::VERSION
+  s.version = MmNestedAttributes::VERSION
   s.date = %q{2010-07-10}
   s.summary = %q{A port of ActiveRecord's nested attributes functionality for MongoMapper}
   s.description = %q{A port of ActiveRecord's nested attributes functionality for MongoMapper.}

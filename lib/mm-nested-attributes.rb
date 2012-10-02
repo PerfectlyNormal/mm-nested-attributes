@@ -1,3 +1,4 @@
+require 'mm-nested-attributes/version'
 require 'mongo_mapper/plugins/associations/nested_attributes'
 
 module MongoMapper
