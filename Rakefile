@@ -1,23 +1,6 @@
+#!/usr/bin/env rake
+require "bundler/gem_tasks"
+require 'rspec/core/rake_task'
 
-begin
-  require 'bones'
-rescue LoadError
-  abort '### Please install the "bones" gem ###'
-end
-
-task :default => 'spec:run'
-task 'gem:release' => 'spec:run'
-
-Bones {
-  name  'mm-nested-attributes'
-  authors  'Toni Tuominen'
-  email    'toni@piranhadigital.fi'
-  url      'http://github.com/tjtuom/mm-nested-attributes'
-
-  ignore_file '.gitignore'
-
-  depend_on 'mongo_mapper', '0.8.2'
-
-  depend_on 'rspec', :development => true
-}
-
+RSpec::Core::RakeTask.new(:spec)
+task default: :spec
