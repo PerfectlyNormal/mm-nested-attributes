@@ -1,43 +1,40 @@
 mm-nested-attributes
-    by Toni Tuominen
-    http://github.com/tjtuom/mm-nested-attributes
+by Toni Tuominen and others
 
-== DESCRIPTION:
+## DESCRIPTION:
 
 A port of ActiveRecord's nested attributes functionality for MongoMapper.
 
-== FEATURES/PROBLEMS:
+## FEATURES/PROBLEMS:
 
 At the moment only collection functionality is supported. Working on
 one at the moment.
 
-== SYNOPSIS:
+## SYNOPSIS:
 
-class Parent
-  include MongoMapper::Document
-  plugin MongoMapper::Plugins::Associations::NestedAttributes
+    class Parent
+      include MongoMapper::Document
+      plugin MongoMapper::Plugins::Associations::NestedAttributes
 
-  many :children
-  accepts_nested_attributes_for :children
-end
+      many :children
+      accepts_nested_attributes_for :children
+    end
 
-class Child
-  include MongoMapper::Document
+    class Child
+      include MongoMapper::Document
 
-  key :foo, String
-end
+      key :foo, String
+    end
 
-== REQUIREMENTS:
+## REQUIREMENTS:
 
 * MongoMapper
 
-== INSTALL:
+## INSTALL:
 
-Add
-gem 'mm-nested-attributes'
-to your Gemfile.
+Add `gem 'mm-nested-attributes'` to your Gemfile.
 
-== LICENSE:
+## LICENSE:
 
 (The MIT License)
 
