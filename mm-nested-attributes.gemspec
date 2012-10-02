@@ -20,5 +20,5 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["History.txt", "README.md"]
   s.rdoc_options = ["--main", "README.txt"]
 
-  s.add_runtime_dependency(%q<mongo_mapper>, ["~> 0.11.2"])
+  s.add_runtime_dependency(%q<mongo_mapper>, [">= 0.11.1"])
 end
