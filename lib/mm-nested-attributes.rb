@@ -95,4 +95,3 @@ module MongoMapper
     end
   end
 end
-
