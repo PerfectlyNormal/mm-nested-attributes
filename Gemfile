@@ -1,3 +1,5 @@
+source :rubygems
+
 gemspec
 
 group :test, :development do
