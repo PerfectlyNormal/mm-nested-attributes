@@ -2,6 +2,7 @@ require 'mongo_mapper'
 require 'mm-nested-attributes/version'
 require 'mongo_mapper/plugins/associations/nested_attributes'
 require 'mongo_mapper/plugins/associations/nested_attributes/destructable'
+require 'mongo_mapper/plugins/associations/nested_attributes/extensions/associations'
 require 'mongo_mapper/plugins/associations/nested_attributes/extensions/many_documents_proxy'
 require 'mongo_mapper/plugins/associations/nested_attributes/extensions/belongs_to_proxy'
 require 'mongo_mapper/plugins/associations/nested_attributes/extensions/one_embedded_proxy'
@@ -15,31 +16,6 @@ module MongoMapper
 
     module EmbeddedDocument
       include MongoMapper::Plugins::Associations::NestedAttributes::Destructable
-    end
-
-    module Associations
-      class Base
-        def many?
-          false
-        end
-
-        def one?
-          false
-        end
-      end
-
-      class ManyAssociation
-        def many?
-          true
-        end
-      end
-
-      class BelongsToAssociation
-        def one?
-          true
-        end
-
-      end
     end
   end
 end
