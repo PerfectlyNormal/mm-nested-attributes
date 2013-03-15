@@ -36,16 +36,15 @@ module MongoMapper
       end
 
       class ManyDocumentsProxy
-        def save_to_collection_with_delete(options={})
+        def save_to_collection(options={})
           if @target
-            to_delete = @target.delete_if { |doc| doc.marked_for_destruction? }
-            to_delete.each { |doc| doc.destroy }
-          end
-          save_to_collection_without_delete(options)
-        end
+            to_delete = @target.dup.reject { |doc| !doc.marked_for_destruction? }
+            @target -= to_delete
 
-        alias :save_to_collection_without_delete :save_to_collection
-        alias :save_to_collection :save_to_collection_with_delete
+            to_delete.each { |doc| doc.destroy }
+            @target.each   { |doc| doc.save(options) }
+          end
+        end
       end
 
       class BelongsToProxy
