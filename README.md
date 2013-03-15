@@ -2,6 +2,7 @@ mm-nested-attributes
 by Toni Tuominen and others
 
 [![Build Status](https://secure.travis-ci.org/PerfectlyNormal/mm-nested-attributes.png)](http://travis-ci.org/PerfectlyNormal/mm-nested-attributes)
+[![Code Climate](https://codeclimate.com/github/PerfectlyNormal/mm-nested-attributes.png)](https://codeclimate.com/github/PerfectlyNormal/mm-nested-attributes)
 
 ## DESCRIPTION:
 
