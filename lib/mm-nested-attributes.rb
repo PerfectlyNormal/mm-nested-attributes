@@ -12,7 +12,6 @@ module MongoMapper
       include MongoMapper::Plugins::Associations::NestedAttributes::Destructable
     end
 
-
     module Associations
       class Base
         def many?
@@ -81,7 +80,6 @@ module MongoMapper
           end
         end
       end
-
     end
   end
 end

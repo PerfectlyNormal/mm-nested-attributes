@@ -98,13 +98,11 @@ describe "Nested attributes plugin for collections" do
         key :value, String
       end
 
-
       @klass.many :children, :class => @child_klass
       @klass.accepts_nested_attributes_for :children
 
       @parent = @klass.new
     end
-
   end
 
 
@@ -131,16 +129,18 @@ describe "Nested attributes plugin for collections" do
     end
 
     after do
-      TestParent.all.each {|t| t.destroy}
-      TestOne.all.each {|t| t.destroy}
-      TestSolo.all.each {|t| t.destroy}
+      TestParent.all.each { |t| t.destroy }
+      TestOne.all.each    { |t| t.destroy }
+      TestSolo.all.each   { |t| t.destroy }
     end
 
     it "raises an error if the document isn't found" do
       @parent = @klass.new
-      @child = @parent.children.create!(:value => 'foo')
-      @solo = @parent.solo.create!(:value => 'solo_foo')
+      @child  = @parent.children.create!(:value => 'foo')
+      @solo   = @parent.solo.create!(:value => 'solo_foo')
+
       id = BSON::ObjectId.new
+
       doing do
         @parent.children_attributes = [ { :id => id, :value => 'bar' } ]
       end.should raise_error(MongoMapper::DocumentNotFound, "Couldn't find Child with ID=#{id} for Parent with ID=#{@parent.id}")
@@ -148,7 +148,7 @@ describe "Nested attributes plugin for collections" do
 
     it 'updates the collection document' do
       @parent = @klass.create!(:value => 'parent_value')
-      @child = @klass.first.children.create!(:value => 'foo')
+      @child  = @klass.first.children.create!(:value => 'foo')
 
       @parent.children_attributes = [ { :id => @child.id, :value => 'bar' } ]
       @parent.children[0].value.should == 'bar'
