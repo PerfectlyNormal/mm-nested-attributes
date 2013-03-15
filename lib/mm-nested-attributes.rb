@@ -1,26 +1,15 @@
 require 'mm-nested-attributes/version'
 require 'mongo_mapper/plugins/associations/nested_attributes'
+require 'mongo_mapper/plugins/associations/nested_attributes/destructable'
 
 module MongoMapper
   module Plugins
     module Document
-      def mark_for_destruction
-        @marked_for_destruction = true
-      end
-
-      def marked_for_destruction?
-        @marked_for_destruction
-      end
+      include MongoMapper::Plugins::Associations::NestedAttributes::Destructable
     end
 
     module EmbeddedDocument
-      def mark_for_destruction
-        @marked_for_destruction = true
-      end
-
-      def marked_for_destruction?
-        @marked_for_destruction
-      end
+      include MongoMapper::Plugins::Associations::NestedAttributes::Destructable
     end
 
 
