@@ -161,9 +161,8 @@ describe "Nested attributes plugin for collections" do
       @child = @parent.children.create!(:value => 'foo')
 
       @parent.children_attributes = [ { :id => @child.id, :_destroy => '1' } ]
-      doing do
-        @parent.save!
-      end.should_not change(@parent.children, :size)
+
+      expect { @parent.save! }.to_not change(@parent.children, :size)
     end
 
     it 'deletes the document when _destroy is present' do
@@ -174,9 +173,7 @@ describe "Nested attributes plugin for collections" do
 
       @parent.children_attributes = [ { :id => @child.id, :_destroy => '1' } ]
 
-      doing do
-        @parent.save!
-      end.should change(@parent.children, :size).by(-1)
+      expect { @parent.save! }.to change(@parent.children, :size).by(-1)
     end
 
     it "does not delete the document until save is called" do
@@ -185,9 +182,11 @@ describe "Nested attributes plugin for collections" do
       @parent = @klass.new
       @child = @parent.children.create!(:value => 'foo')
 
-      doing do
+      @child  = @parent.children.create!(:value => 'foo')
+
+      expect {
         @parent.children_attributes = [ { :id => @child.id, :_destroy => '1' } ]
-      end.should_not change(@parent.children, :size)
+      }.to_not change(@parent.children, :size)
     end
   end
 
