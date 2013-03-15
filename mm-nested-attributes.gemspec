@@ -3,9 +3,9 @@ require File.expand_path('../lib/mm-nested-attributes/version', __FILE__)
 
 Gem::Specification.new do |s|
   s.name = %q{mm-nested-attributes}
-  s.authors = ["Toni Tuominen"]
-  s.email = %q{toni@piranhadigital.fi}
-  s.homepage = %q{http://github.com/tjtuom/mm-nested-attributes}
+  s.authors = ["Per Christian B. Viken", "Toni Tuominen"]
+  s.email = %q{perchr@northblue.org}
+  s.homepage = %q{http://github.com/PerfectlyNormal/mm-nested-attributes}
 
   s.version = MmNestedAttributes::VERSION
   s.date = %q{2010-07-10}
